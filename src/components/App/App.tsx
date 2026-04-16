@@ -1,37 +1,43 @@
-// import css from './App.module.css';
-import { useState, useEffect, useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useDebouncedCallback } from 'use-debounce';
 
-import Countries from '../Countries/Countries';
-import type { Country } from '../../types/country';
 import fetchCountries from '../../services/countryService';
+import Countries from '../Countries/Countries';
 import Pagination from '../Pagination/Pagination';
+import SearchBar from '../SearchBar/SearchBar';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+
 import css from './App.module.css';
 
 const ITEMS_PER_PAGE = 12;
 
 const App = () => {
-  const [countries, setCountries] = useState<Country[]>([]);
+  const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    const loadCountries = async () => {
-      const data = await fetchCountries();
-      setCountries(data);
-    };
+  const debouncedSearch = useDebouncedCallback((value: string) => {
+    setCurrentPage(1);
+    setSearch(value);
+  }, 500);
 
-    loadCountries();
-  }, []);
+  const { data: countries = [] } = useQuery({
+    queryKey: ['countries', search],
+    queryFn: () => fetchCountries(search),
+    placeholderData: keepPreviousData,
+  });
 
   const totalPages = Math.ceil(countries.length / ITEMS_PER_PAGE);
 
   const currentCountries = useMemo(() => {
     const start = (currentPage - 1) * ITEMS_PER_PAGE;
     return countries.slice(start, start + ITEMS_PER_PAGE);
-  }, [currentPage, countries]);
+  }, [countries, currentPage]);
 
   return (
     <>
       <div className={css.container}>
+        <SearchBar onChange={debouncedSearch} />
         {totalPages > 1 && (
           <Pagination
             totalPages={totalPages}
@@ -42,7 +48,7 @@ const App = () => {
         {countries.length > 0 ? (
           <Countries countries={currentCountries} />
         ) : (
-          <p className={css.text}>Sorry, no countries found</p>
+          <ErrorMessage />
         )}
       </div>
     </>
