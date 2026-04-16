@@ -31,18 +31,20 @@ const App = () => {
 
   return (
     <>
-      {totalPages > 1 && (
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-        />
-      )}
-      {countries.length > 0 ? (
-        <Countries countries={currentCountries} />
-      ) : (
-        <p className={css.text}>Sorry, no countries found</p>
-      )}
+      <div className={css.container}>
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        )}
+        {countries.length > 0 ? (
+          <Countries countries={currentCountries} />
+        ) : (
+          <p className={css.text}>Sorry, no countries found</p>
+        )}
+      </div>
     </>
   );
 };
