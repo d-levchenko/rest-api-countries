@@ -1,21 +1,11 @@
-import { useEffect, useState } from 'react';
-
 import type { Country } from '../../types/country';
-import fetchCountries from '../../services/countryService';
 import css from './Countries.module.css';
 
-const Countries = () => {
-  const [countries, setCountries] = useState<Country[]>([]);
+interface CountriesProps {
+  countries: Country[];
+}
 
-  useEffect(() => {
-    const loadCountries = async () => {
-      const data = await fetchCountries();
-      setCountries(data);
-    };
-
-    loadCountries();
-  }, []);
-
+const Countries = ({ countries }: CountriesProps) => {
   return (
     <div className={css.countryWrapper}>
       <ul className={css.countries}>
