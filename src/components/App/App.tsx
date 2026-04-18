@@ -7,6 +7,7 @@ import Countries from '../Countries/Countries';
 import Pagination from '../Pagination/Pagination';
 import SearchBar from '../SearchBar/SearchBar';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import Navbar from '../Navbar/Navbar';
 
 import css from './App.module.css';
 
@@ -15,6 +16,7 @@ const ITEMS_PER_PAGE = 12;
 const App = () => {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [mode, setMode] = useState(false);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setCurrentPage(1);
@@ -34,22 +36,29 @@ const App = () => {
     return countries.slice(start, start + ITEMS_PER_PAGE);
   }, [countries, currentPage]);
 
+  const handleThemeChange = () => {
+    setMode(prev => !prev);
+  };
+
   return (
     <>
-      <div className={css.container}>
-        <SearchBar onChange={debouncedSearch} />
-        {totalPages > 1 && (
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          />
-        )}
-        {countries.length > 0 ? (
-          <Countries countries={currentCountries} />
-        ) : (
-          <ErrorMessage />
-        )}
+      <div className={mode ? css.dark : css.light}>
+        <div className={css.container}>
+          <Navbar onChange={handleThemeChange} mode={mode} />
+          <SearchBar onChange={debouncedSearch} />
+          {totalPages > 1 && (
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+            />
+          )}
+          {countries.length > 0 ? (
+            <Countries countries={currentCountries} />
+          ) : (
+            <ErrorMessage />
+          )}
+        </div>
       </div>
     </>
   );

@@ -9,29 +9,34 @@ const Countries = ({ countries }: CountriesProps) => {
   return (
     <div className={css.countryWrapper}>
       <ul className={css.countries}>
-        {countries.map(country => (
-          <li key={country.cca3} className={css.countryItem}>
-            <img
-              className={css.image}
-              src={country.flags.png}
-              alt={country.name.common}
-            />
-            <div className={css.wrapperText}>
-              <p className={css.countryName}>
-                <strong>{country.name.common}</strong>
-              </p>
-              <p>
-                <strong>Population: </strong> {country.population}
-              </p>
-              <p>
-                <strong>Region:</strong> {country.region}
-              </p>
-              <p>
-                <strong>Capital:</strong> {country.capital?.[0] ?? 'No capital'}
-              </p>
-            </div>
-          </li>
-        ))}
+        {countries.map(
+          ({
+            cca3,
+            flags: { png },
+            name: { common },
+            population,
+            region,
+            capital,
+          }) => (
+            <li key={cca3} className={css.countryItem}>
+              <img className={css.image} src={png} alt={common} />
+              <div className={css.wrapperText}>
+                <p className={css.countryName}>
+                  <strong>{common}</strong>
+                </p>
+                <p>
+                  <strong>Population: </strong> {population}
+                </p>
+                <p>
+                  <strong>Region:</strong> {region}
+                </p>
+                <p>
+                  <strong>Capital:</strong> {capital?.[0] ?? 'No capital'}
+                </p>
+              </div>
+            </li>
+          ),
+        )}
       </ul>
     </div>
   );

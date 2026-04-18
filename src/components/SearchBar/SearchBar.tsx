@@ -1,4 +1,5 @@
 import type { ChangeEvent } from 'react';
+import { IoIosSearch } from 'react-icons/io';
 import css from './SearchBar.module.css';
 
 interface SearchBarProps {
@@ -11,12 +12,18 @@ const SearchBar = ({ onChange }: SearchBarProps) => {
   };
 
   return (
-    <input
-      className={css.input}
-      type="text"
-      placeholder="Search country..."
-      onChange={handleChange}
-    />
+    <div className={css.inputDiv}>
+      <span className={css.searchInput}>
+        <IoIosSearch />
+      </span>
+      <input
+        className={css.input}
+        type="text"
+        name="search"
+        placeholder="Search country..."
+        onChange={handleChange}
+      />
+    </div>
   );
 };
 

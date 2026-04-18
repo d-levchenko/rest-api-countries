@@ -1,0 +1,26 @@
+.nav {
+  display: flex;
+  padding: 20px;
+  margin: 0 0 20px 0;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.button {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.2;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
