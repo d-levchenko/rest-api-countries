@@ -18,6 +18,10 @@
   transition:
     border 0.2s ease,
     box-shadow 0.2s ease;
+
+  @media screen and (max-width: 767px) {
+    width: 160px;
+  }
 }
 
 .input::placeholder {
