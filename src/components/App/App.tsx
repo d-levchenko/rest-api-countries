@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -61,38 +61,40 @@ const App = () => {
     setCurrentPage(1);
   };
 
+  useEffect(() => {
+    document.body.classList.toggle('dark', mode);
+  }, [mode]);
+
   return (
     <>
-      <div className={mode ? css.dark : css.light}>
-        <div className={css.container}>
-          <Navbar onChange={handleThemeChange} mode={mode} />
-          <div className={css.searchFilterBlock}>
-            <SearchBar onChange={debouncedSearch} />
-            <Dropdown selectedRegion={selectedRegion} onSelect={handleSelect} />
-          </div>
-          {totalPages > 1 && (
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              onPageChange={setCurrentPage}
-            />
-          )}
-          {countries.length > 0 && (
-            <Countries
-              countries={currentCountries}
-              mode={mode}
-              onSelect={setSelectedCountry}
-            />
-          )}
-          {isLoading && <Loader />}
-          {isError && !isLoading && <ErrorMessage />}
-          {selectedCountry && (
-            <ModalWindow
-              country={selectedCountry}
-              onClose={() => setSelectedCountry(null)}
-            />
-          )}
+      <div className={css.container}>
+        <Navbar onChange={handleThemeChange} mode={mode} />
+        <div className={css.searchFilterBlock}>
+          <SearchBar onChange={debouncedSearch} />
+          <Dropdown selectedRegion={selectedRegion} onSelect={handleSelect} />
         </div>
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        )}
+        {countries.length > 0 && (
+          <Countries
+            countries={currentCountries}
+            mode={mode}
+            onSelect={setSelectedCountry}
+          />
+        )}
+        {isLoading && <Loader />}
+        {isError && !isLoading && <ErrorMessage />}
+        {selectedCountry && (
+          <ModalWindow
+            country={selectedCountry}
+            onClose={() => setSelectedCountry(null)}
+          />
+        )}
       </div>
     </>
   );

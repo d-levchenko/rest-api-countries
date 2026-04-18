@@ -15,7 +15,6 @@ export interface Country {
   currencies?: {
     [key: string]: {
       name: string;
-      symbol: string;
     };
   };
   languages?: {

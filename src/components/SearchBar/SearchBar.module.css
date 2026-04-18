@@ -20,7 +20,7 @@
     box-shadow 0.2s ease;
 
   @media screen and (max-width: 767px) {
-    width: 160px;
+    width: 220px;
   }
 }
 
