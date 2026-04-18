@@ -1,11 +1,13 @@
 import type { Country } from '../../types/country';
 import css from './Countries.module.css';
+import clsx from 'clsx';
 
 interface CountriesProps {
   countries: Country[];
+  mode: boolean;
 }
 
-const Countries = ({ countries }: CountriesProps) => {
+const Countries = ({ countries, mode }: CountriesProps) => {
   return (
     <div className={css.countryWrapper}>
       <ul className={css.countries}>
@@ -19,20 +21,24 @@ const Countries = ({ countries }: CountriesProps) => {
             capital,
           }) => (
             <li key={cca3} className={css.countryItem}>
-              <img className={css.image} src={png} alt={common} />
-              <div className={css.wrapperText}>
-                <p className={css.countryName}>
-                  <strong>{common}</strong>
-                </p>
-                <p>
-                  <strong>Population: </strong> {population}
-                </p>
-                <p>
-                  <strong>Region:</strong> {region}
-                </p>
-                <p>
-                  <strong>Capital:</strong> {capital?.[0] ?? 'No capital'}
-                </p>
+              <div className={mode ? css.dark : css.light}>
+                <img
+                  className={css.image}
+                  src={png}
+                  alt={common}
+                  loading="lazy"
+                  fetchPriority="low"
+                />
+                <div
+                  className={clsx(
+                    css.wrapperText,
+                    mode ? css.wrapperTextDark : css.wrapperTextLight,
+                  )}>
+                  <p className={css.countryName}>{common}</p>
+                  <p>Population: {population}</p>
+                  <p>Region: {region}</p>
+                  <p>Capital: {capital?.[0] ?? 'No capital'}</p>
+                </div>
               </div>
             </li>
           ),

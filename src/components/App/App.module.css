@@ -62,7 +62,7 @@
 .dark {
   --text: #9ca3af;
   --text-h: #f3f4f6;
-  --bg: #16171d;
+  --bg: oklch(27.8% 0.033 256.848);
   --border: #2e303a;
   --code-bg: #1f2028;
   --accent: #c084fc;
@@ -80,10 +80,15 @@
   background: var(--bg);
 }
 
-/* responsive font */
 @media (max-width: 1024px) {
   .light,
   .dark {
     font-size: 16px;
   }
+}
+
+.searchFilterBlock {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
 }

@@ -9,6 +9,14 @@
   padding: 10px;
 }
 
+.wrapperTextLight {
+  border-top: 1px solid #d3d0d0;
+}
+
+.wrapperTextDark {
+  border: none;
+}
+
 .countryWrapper {
   padding: 0 40px;
 }
@@ -17,7 +25,6 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  flex-basis: calc((100% - 90px) / 4);
   max-width: 310px;
   border-radius: 5px;
   overflow: hidden;
@@ -25,6 +32,22 @@
     0px 1px 3px rgba(0, 0, 0, 0.12),
     0px 1px 1px rgba(0, 0, 0, 0.14),
     0px 2px 1px rgba(0, 0, 0, 0.2);
+
+  @media screen and (min-width: 768px) {
+    flex-basis: calc((100% - 60px) / 2);
+  }
+
+  @media screen and (min-width: 1440px) {
+    flex-basis: calc((100% - 90px) / 4);
+  }
+}
+
+.light {
+  background-color: #ffffff;
+}
+
+.dark {
+  background-color: #1d222c;
 }
 
 .countryName {

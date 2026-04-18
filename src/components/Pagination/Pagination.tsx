@@ -26,7 +26,7 @@ const Pagination = ({
   return (
     <ReactPaginate
       pageCount={totalPages}
-      pageRangeDisplayed={5}
+      pageRangeDisplayed={3}
       marginPagesDisplayed={1}
       onPageChange={({ selected }) => onPageChange(selected + 1)}
       forcePage={currentPage - 1}
