@@ -10,6 +10,9 @@ import Navbar from '../Navbar/Navbar';
 import Loader from '../Loader/Loader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Dropdown from '../DropdownSelect/DropdownSelect';
+import ModalWindow from '../ModalWindow/ModalWindow';
+
+import type { Country } from '../../types/country';
 
 import css from './App.module.css';
 
@@ -20,6 +23,7 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [mode, setMode] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setCurrentPage(1);
@@ -74,10 +78,20 @@ const App = () => {
             />
           )}
           {countries.length > 0 && (
-            <Countries countries={currentCountries} mode={mode} />
+            <Countries
+              countries={currentCountries}
+              mode={mode}
+              onSelect={setSelectedCountry}
+            />
           )}
           {isLoading && <Loader />}
           {isError && !isLoading && <ErrorMessage />}
+          {selectedCountry && (
+            <ModalWindow
+              country={selectedCountry}
+              onClose={() => setSelectedCountry(null)}
+            />
+          )}
         </div>
       </div>
     </>
