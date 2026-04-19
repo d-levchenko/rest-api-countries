@@ -9,6 +9,8 @@ interface NavbarProps {
 }
 
 const Navbar = ({ onChange, mode }: NavbarProps) => {
+  const isDark = mode === 'dark';
+
   return (
     <nav className={css.nav}>
       <a className={css.title} href="/">
@@ -16,8 +18,8 @@ const Navbar = ({ onChange, mode }: NavbarProps) => {
       </a>
 
       <button className={css.button} onClick={onChange}>
-        {mode ? <MdOutlineLightMode size={15} /> : <BsMoonStars />}
-        <span>{mode ? 'Light Mode' : 'Dark Mode'}</span>
+        {isDark ? <MdOutlineLightMode size={15} /> : <BsMoonStars />}
+        <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
       </button>
     </nav>
   );
