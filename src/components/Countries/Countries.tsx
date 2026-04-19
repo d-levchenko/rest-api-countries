@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 interface CountriesProps {
   countries: Country[];
-  mode: boolean;
+  mode: string;
   onSelect: (country: Country) => void;
 }
 

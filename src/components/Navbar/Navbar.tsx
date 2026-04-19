@@ -5,7 +5,7 @@ import css from './Navbar.module.css';
 
 interface NavbarProps {
   onChange: () => void;
-  mode: boolean;
+  mode: string;
 }
 
 const Navbar = ({ onChange, mode }: NavbarProps) => {

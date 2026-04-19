@@ -21,7 +21,9 @@ const ITEMS_PER_PAGE = 12;
 const App = () => {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [mode, setMode] = useState(false);
+  const [mode, setMode] = useState(
+    () => localStorage.getItem('mode') || 'light',
+  );
   const [selectedRegion, setSelectedRegion] = useState('');
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
 
@@ -52,18 +54,19 @@ const App = () => {
     return filteredCountries.slice(start, start + ITEMS_PER_PAGE);
   }, [filteredCountries, currentPage]);
 
-  const handleThemeChange = () => {
-    setMode(prev => !prev);
-  };
-
   const handleSelect = (region: string) => {
     setSelectedRegion(region);
     setCurrentPage(1);
   };
 
   useEffect(() => {
-    document.body.classList.toggle('dark', mode);
+    localStorage.setItem('mode', mode);
+    document.body.className = mode;
   }, [mode]);
+
+  const handleThemeChange = () => {
+    setMode(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   return (
     <>
