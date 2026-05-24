@@ -64,6 +64,8 @@ const App = () => {
     document.body.className = mode;
   }, [mode]);
 
+  const handleClose = () => setSelectedCountry(null);
+
   const handleThemeChange = () => {
     setMode(prev => (prev === 'light' ? 'dark' : 'light'));
   };
@@ -93,10 +95,7 @@ const App = () => {
         {isLoading && <Loader />}
         {isError && !isLoading && <ErrorMessage />}
         {selectedCountry && (
-          <ModalWindow
-            country={selectedCountry}
-            onClose={() => setSelectedCountry(null)}
-          />
+          <ModalWindow country={selectedCountry} onClose={handleClose} />
         )}
       </div>
     </>

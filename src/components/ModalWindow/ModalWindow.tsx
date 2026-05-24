@@ -34,6 +34,18 @@ const ModalWindow = ({ country, onClose }: ModalWindowProps) => {
 
   if (!country) return null;
 
+  const {
+    currencies,
+    languages,
+    tld,
+    population,
+    region,
+    subregion,
+    capital,
+    name,
+    flags: { png },
+  } = country;
+
   return createPortal(
     <div className={css.backdrop} onClick={handleBackdropClick}>
       <div className={css.modal}>
@@ -43,45 +55,37 @@ const ModalWindow = ({ country, onClose }: ModalWindowProps) => {
 
         <div className={css.content}>
           <div className={css.left}>
-            <img
-              className={css.image}
-              src={country.flags.png}
-              alt={country.name.common}
-            />
+            <img className={css.image} src={png} alt={name.common} />
 
-            <h2 className={css.title}>{country.name.common}</h2>
-            <p className={css.official}>{country.name.official}</p>
+            <h2 className={css.title}>{name.common}</h2>
+            <p className={css.official}>{name.official}</p>
           </div>
 
           <div className={css.right}>
             <p>
-              <strong>Population:</strong> {country.population.toLocaleString()}
+              <strong>Population:</strong> {population.toLocaleString()}
             </p>
             <p>
-              <strong>Region:</strong> {country.region}
+              <strong>Region:</strong> {region}
             </p>
             <p>
-              <strong>Subregion:</strong> {country.subregion ?? 'N/A'}
+              <strong>Subregion:</strong> {subregion ?? 'N/A'}
             </p>
             <p>
-              <strong>Capital:</strong> {country.capital?.[0] ?? 'N/A'}
+              <strong>Capital:</strong> {capital?.[0] ?? 'N/A'}
             </p>
             <p>
-              <strong>Top Level Domain:</strong> {country.tld?.[0] ?? 'N/A'}
+              <strong>Top Level Domain:</strong> {tld?.[0] ?? 'N/A'}
             </p>
 
             <p>
               <strong>Currency:</strong>
-              {country.currencies
-                ? country.currencies[Object.keys(country.currencies)[0]].name
-                : 'N/A'}
+              {currencies ? currencies[Object.keys(currencies)[0]].name : 'N/A'}
             </p>
 
             <p>
               <strong>Languages:</strong>
-              {country.languages
-                ? Object.values(country.languages).join(', ')
-                : 'N/A'}
+              {languages ? Object.values(languages).join(', ') : 'N/A'}
             </p>
           </div>
         </div>
