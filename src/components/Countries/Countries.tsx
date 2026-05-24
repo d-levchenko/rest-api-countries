@@ -1,6 +1,6 @@
 import type { Country } from '../../types/country';
+import CountryItem from '../CountryItem/CountryItem';
 import css from './Countries.module.css';
-import clsx from 'clsx';
 
 interface CountriesProps {
   countries: Country[];
@@ -13,28 +13,12 @@ const Countries = ({ countries, mode, onSelect }: CountriesProps) => {
     <div className={css.countryWrapper}>
       <ul className={css.countries}>
         {countries.map(country => (
-          <li
+          <CountryItem
             key={country.cca3}
-            className={css.countryItem}
-            onClick={() => onSelect(country)}>
-            <img
-              className={css.image}
-              src={country.flags.png}
-              alt={country.name.common}
-              loading="lazy"
-              fetchPriority="low"
-            />
-            <div
-              className={clsx(
-                css.wrapperText,
-                mode ? css.wrapperTextDark : css.wrapperTextLight,
-              )}>
-              <p className={css.countryName}>{country.name.common}</p>
-              <p>Population: {country.population.toLocaleString()}</p>
-              <p>Region: {country.region}</p>
-              <p>Capital: {country.capital?.[0] ?? 'No capital'}</p>
-            </div>
-          </li>
+            country={country}
+            mode={mode}
+            onSelect={onSelect}
+          />
         ))}
       </ul>
     </div>

@@ -55,38 +55,50 @@ const ModalWindow = ({ country, onClose }: ModalWindowProps) => {
 
         <div className={css.content}>
           <div className={css.left}>
-            <img className={css.image} src={png} alt={name.common} />
+            <img className={css.image} src={png} alt={name?.common} />
 
-            <h2 className={css.title}>{name.common}</h2>
-            <p className={css.official}>{name.official}</p>
+            <h2 className={css.title}>{name?.common}</h2>
+            <p className={css.official}>{name?.official}</p>
           </div>
 
           <div className={css.right}>
-            <p>
-              <strong>Population:</strong> {population.toLocaleString()}
-            </p>
-            <p>
-              <strong>Region:</strong> {region}
-            </p>
-            <p>
-              <strong>Subregion:</strong> {subregion ?? 'N/A'}
-            </p>
-            <p>
-              <strong>Capital:</strong> {capital?.[0] ?? 'N/A'}
-            </p>
-            <p>
-              <strong>Top Level Domain:</strong> {tld?.[0] ?? 'N/A'}
-            </p>
-
-            <p>
-              <strong>Currency:</strong>
-              {currencies ? currencies[Object.keys(currencies)[0]].name : 'N/A'}
-            </p>
-
-            <p>
-              <strong>Languages:</strong>
-              {languages ? Object.values(languages).join(', ') : 'N/A'}
-            </p>
+            {population && population > 0 && (
+              <p>
+                <strong>Population: </strong> {population.toLocaleString()}
+              </p>
+            )}
+            {region && region.length > 0 && (
+              <p>
+                <strong>Region: </strong> {region}
+              </p>
+            )}
+            {subregion && subregion.length > 0 && (
+              <p>
+                <strong>Subregion: {subregion}</strong>
+              </p>
+            )}
+            {capital && capital.length > 0 && (
+              <p>
+                <strong>Capital: </strong> {capital[0]}
+              </p>
+            )}
+            {tld && tld.length > 0 && (
+              <p>
+                <strong>Top Level Domain: </strong> {tld?.[0]}
+              </p>
+            )}
+            {currencies && currencies.key && (
+              <p>
+                <strong>Currency: </strong>
+                {currencies[Object.keys(currencies)[0]]?.name}
+              </p>
+            )}
+            {languages && languages.key && (
+              <p>
+                <strong>Languages: </strong>
+                {Object.values(languages).join(', ')}
+              </p>
+            )}
           </div>
         </div>
       </div>
