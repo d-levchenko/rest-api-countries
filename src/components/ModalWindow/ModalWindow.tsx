@@ -35,15 +35,15 @@ const ModalWindow = ({ country, onClose }: ModalWindowProps) => {
   if (!country) return null;
 
   const {
-    currencies,
-    languages,
-    tld,
+    names: { common, official },
+    capitals,
     population,
     region,
     subregion,
-    capital,
-    name,
-    flags: { png },
+    flag: { url_png, description },
+    currencies,
+    languages,
+    tlds,
   } = country;
 
   return createPortal(
@@ -55,10 +55,10 @@ const ModalWindow = ({ country, onClose }: ModalWindowProps) => {
 
         <div className={css.content}>
           <div className={css.left}>
-            <img className={css.image} src={png} alt={name?.common} />
+            <img className={css.image} src={url_png} alt={description} />
 
-            <h2 className={css.title}>{name?.common}</h2>
-            <p className={css.official}>{name?.official}</p>
+            <h2 className={css.title}>{common}</h2>
+            <p className={css.official}>{official}</p>
           </div>
 
           <div className={css.right}>
@@ -77,26 +77,28 @@ const ModalWindow = ({ country, onClose }: ModalWindowProps) => {
                 <strong>Subregion: {subregion}</strong>
               </p>
             )}
-            {capital && capital.length > 0 && (
+            {capitals[0] && capitals[0]?.name.length > 0 && (
               <p>
-                <strong>Capital: </strong> {capital[0]}
+                <strong>Capital: </strong> {capitals[0]?.name}
               </p>
             )}
-            {tld && tld.length > 0 && (
+            {tlds && tlds.length > 0 && (
               <p>
-                <strong>Top Level Domain: </strong> {tld?.[0]}
+                <strong>Top Level Domain: </strong> {tlds?.[0]}
               </p>
             )}
-            {currencies && currencies.key && (
+            {currencies.length > 0 && (
               <p>
                 <strong>Currency: </strong>
-                {currencies[Object.keys(currencies)[0]]?.name}
+                {currencies
+                  .map(currency => `${currency.name} (${currency.symbol})`)
+                  .join(', ')}
               </p>
             )}
-            {languages && languages.key && (
+            {languages.length > 0 && (
               <p>
                 <strong>Languages: </strong>
-                {Object.values(languages).join(', ')}
+                {languages.map(language => language.name).join(', ')}
               </p>
             )}
           </div>

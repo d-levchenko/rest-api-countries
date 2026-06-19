@@ -14,7 +14,7 @@ const Countries = ({ countries, mode, onSelect }: CountriesProps) => {
       <ul className={css.countries}>
         {countries.map(country => (
           <CountryItem
-            key={country.cca3}
+            key={country.uuid}
             country={country}
             mode={mode}
             onSelect={onSelect}

@@ -11,13 +11,13 @@ interface CountryItemProps {
 const CountryItem = ({ country, mode, onSelect }: CountryItemProps) => {
   return (
     <li
-      key={country.cca3}
+      key={country.uuid}
       className={css.countryItem}
       onClick={() => onSelect(country)}>
       <img
         className={css.image}
-        src={country.flags.png}
-        alt={country.name.common}
+        src={country.flag.url_png}
+        alt={country.names.common}
         loading="lazy"
         fetchPriority="low"
       />
@@ -26,10 +26,10 @@ const CountryItem = ({ country, mode, onSelect }: CountryItemProps) => {
           css.wrapperText,
           mode ? css.wrapperTextDark : css.wrapperTextLight,
         )}>
-        <p className={css.countryName}>{country.name.common}</p>
+        <p className={css.countryName}>{country.names.common}</p>
         <p>Population: {country.population.toLocaleString()}</p>
         <p>Region: {country.region}</p>
-        <p>Capital: {country.capital?.[0] ?? 'No capital'}</p>
+        <p>Capital: {country.capitals[0]?.name ?? 'No capital'}</p>
       </div>
     </li>
   );

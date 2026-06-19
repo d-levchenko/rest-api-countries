@@ -1,18 +1,56 @@
 import axios from 'axios';
-import type { Country } from '../types/country';
+import type { CountriesResponse } from '../types/country';
 
-const fields =
-  'name,cca3,capital,population,region,flags,tld,currencies,languages';
+const api = axios.create({
+  baseURL: 'https://api.restcountries.com',
+});
 
-const fetchCountries = async (search?: string): Promise<Country[]> => {
-  const baseUrl = 'https://restcountries.com/v3.1';
+const API_KEY = import.meta.env.VITE_COUNTRY_TOKEN;
 
-  const url = search?.trim()
-    ? `${baseUrl}/name/${search}`
-    : `${baseUrl}/all?fields=${fields}`;
+export const fetchCountries = async (search?: string) => {
+  let searchParams = {
+    q: search,
+  };
 
-  const { data } = await axios.get<Country[]>(url);
-  return data;
+  if (!search) {
+    searchParams = {
+      q: undefined,
+    };
+  }
+
+  const { data } = await api.get<CountriesResponse>('/countries/v5', {
+    params: {
+      ...searchParams,
+      limit: 90,
+    },
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+    },
+  });
+
+  return data.data.objects;
 };
 
-export default fetchCountries;
+export const fetchCountryByRegion = async (region?: string) => {
+  let searchRegion = {
+    region: region,
+  };
+
+  if (!region) {
+    searchRegion = {
+      region: undefined,
+    };
+  }
+
+  const { data } = await api.get<CountriesResponse>('/countries/v5', {
+    params: {
+      ...searchRegion,
+      limit: 90,
+    },
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+    },
+  });
+
+  return data.data.objects;
+};

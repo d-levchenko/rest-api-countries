@@ -1,24 +1,61 @@
+export interface CountriesResponse {
+  data: {
+    objects: Country[];
+  };
+}
+
 export interface Country {
-  name: {
+  uuid: string;
+
+  names: {
     common: string;
     official: string;
+    native?: Record<
+      string,
+      {
+        common: string;
+        official: string;
+      }
+    >;
+    translations?: Record<string, { common: string; official: string }>;
   };
-  capital?: string[];
+
+  capitals: {
+    name: string;
+    coordinates?: {
+      lat: number;
+      lng: number;
+    };
+  }[];
+
   population: number;
+
   region: string;
   subregion?: string;
-  flags: {
-    png: string;
-    svg: string;
+
+  flag: {
+    emoji: string;
+    url_png: string;
+    url_svg: string;
+    description?: string;
   };
-  tld?: string[];
-  currencies?: {
-    [key: string]: {
-      name: string;
-    };
+
+  tlds?: string[];
+
+  currencies: {
+    code: string;
+    name: string;
+    symbol: string;
+  }[];
+
+  languages: {
+    name: string;
+    native_name?: string;
+    iso639_1?: string;
+  }[];
+
+  codes: {
+    alpha_2: string;
+    alpha_3: string;
   };
-  languages?: {
-    [key: string]: string;
-  };
-  cca3: string;
 }
