@@ -1,6 +1,14 @@
 export interface CountriesResponse {
   data: {
     objects: Country[];
+    meta: {
+      total: number;
+      count: number;
+      limit: number;
+      offset: number;
+      more: boolean;
+      request_id: string;
+    };
   };
 }
 

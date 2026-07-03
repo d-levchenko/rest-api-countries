@@ -7,28 +7,25 @@ const api = axios.create({
 
 const API_KEY = import.meta.env.VITE_COUNTRY_TOKEN;
 
-export const fetchCountries = async (search?: string) => {
-  let searchParams = {
-    q: search,
-  };
-
-  if (!search) {
-    searchParams = {
-      q: undefined,
-    };
-  }
+export const fetchCountries = async (
+  search = '',
+  page = 1,
+  limit = 12,
+): Promise<CountriesResponse['data']> => {
+  const offset = (page - 1) * limit;
 
   const { data } = await api.get<CountriesResponse>('/countries/v5', {
     params: {
-      ...searchParams,
-      limit: 90,
+      q: search || undefined,
+      limit,
+      offset,
     },
     headers: {
       Authorization: `Bearer ${API_KEY}`,
     },
   });
 
-  return data.data.objects;
+  return data.data;
 };
 
 export const fetchCountryByRegion = async (region?: string) => {
